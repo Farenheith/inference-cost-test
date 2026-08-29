@@ -1,0 +1,22 @@
+# Problema 7: API REST (Estilo Verboso)
+
+Crie uma API REST simples usando Node.js e Express.js que gerencia livros. Este é um exemplo educacional, então forneça explicações detalhadas para cada parte do código.
+
+Requisitos:
+- GET /books - Listar todos os livros com filtragem
+- GET /books/:id - Obter único livro por ID  
+- POST /books - Criar novo livro
+- PUT /books/:id - Atualizar livro existente
+- DELETE /books/:id - Excluir livro
+- GET /stats - Retornar estatísticas
+
+Diretrizes de implementação:
+1. Use armazenamento em array em memória com comentários detalhados explicando escolhas da estrutura de dados
+2. Crie arquivos de rota separados ou cabeçalhos de seção claros para organizar o código
+3. Inclua documentação JSDoc abrangente para cada função e endpoint
+4. Adicione tratamento de erros completo com classes de erro personalizadas e middleware
+5. Explique por que você escolheu padrões específicos (convenções REST, async/await, etc.)
+6. Inclua um README.md explicando como executar a API e testar endpoints
+7. Adicione exemplos de comandos curl ou solicitações Postman nos comentários
+
+Formato de saída: Comece com um parágrafo introdutório, depois forneça cada arquivo com explicações detalhadas entre as seções.

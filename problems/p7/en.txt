@@ -1,0 +1,22 @@
+# Problem 7: REST API (Verbose Style)
+
+Create a simple REST API using Node.js and Express.js that manages books. This is an educational example, so provide detailed explanations for every part of the code.
+
+Requirements:
+- GET /books - List all books with filtering
+- GET /books/:id - Get single book by ID  
+- POST /books - Create new book
+- PUT /books/:id - Update existing book
+- DELETE /books/:id - Delete book
+- GET /stats - Return statistics
+
+Implementation guidelines:
+1. Use in-memory array storage with detailed comments explaining data structure choices
+2. Create separate route files or clear section headers to organize the code
+3. Include comprehensive JSDoc documentation for every function and endpoint
+4. Add thorough error handling with custom error classes and middleware
+5. Explain why you chose specific patterns (REST conventions, async/await, etc.)
+6. Include a README.md explaining how to run the API and test endpoints
+7. Add example curl commands or Postman requests in comments
+
+Output format: Start with an overview paragraph, then provide each file with detailed explanations between sections.
