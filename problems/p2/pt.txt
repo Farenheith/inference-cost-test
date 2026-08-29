@@ -1,12 +1,21 @@
 # Problema 2: API REST com Express
 
-Crie uma API REST simples usando Node.js e Express.js que gerencia uma coleção de livros. A API deve suportar:
+Crie uma API REST simples usando Node.js e Express.js que gerencia livros. Saída APENAS o código - sem explicações, sem cabeçalhos markdown, sem README.
 
-1. GET /books - Listar todos os livros (com parâmetros de consulta opcionais para filtrar por gênero, autor ou status)
-2. GET /books/:id - Obter um único livro por ID
-3. POST /books - Criar um novo livro (título, autor, gênero, anoPublicacao, lido)
-4. PUT /books/:id - Atualizar um livro existente
-5. DELETE /books/:id - Excluir um livro
-6. GET /stats - Retornar estatísticas: total de livros, livros por gênero, livros lidos vs não lidos
+Requisitos:
+- GET /books - Listar todos os livros (params query: genre, author, isRead)
+- GET /books/:id - Obter único livro por ID
+- POST /books - Criar livro {title, author, genre, publishedYear, isRead}
+- PUT /books/:id - Atualizar livro existente
+- DELETE /books/:id - Excluir livro
+- GET /stats - Retornar estatísticas: total, byGenre, readCount
 
-Use armazenamento em memória (sem banco de dados). Inclua tratamento adequado de erros e validação. Adicione comentários JSDoc para todos os endpoints.
+Regras de implementação:
+1. Usar array em memória (sem banco de dados)
+2. Colocar TODOS os rotas e handlers em um único arquivo app.js
+3. Usar funções arrow inline para handlers de rota (não declarações de função separadas)
+4. Sem comentários JSDoc, sem middleware de tratamento de erros
+5. Retornar respostas JSON diretamente com res.json()
+6. Incluir package.json com dependência express
+
+Formato de saída: Apenas os arquivos de código, nada mais.

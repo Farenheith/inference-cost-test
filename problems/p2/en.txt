@@ -1,12 +1,21 @@
 # Problem 2: REST API with Express
 
-Create a simple REST API using Node.js and Express.js that manages a collection of books. The API should support:
+Create a simple REST API using Node.js and Express.js that manages books. Output ONLY the code - no explanations, no markdown headers, no README.
 
-1. GET /books - List all books (with optional query params for filtering by genre, author, or status)
-2. GET /books/:id - Get a single book by ID
-3. POST /books - Create a new book (title, author, genre, publishedYear, isRead)
-4. PUT /books/:id - Update an existing book
-5. DELETE /books/:id - Delete a book
-6. GET /stats - Return statistics: total books, books by genre, books read vs unread
+Requirements:
+- GET /books - List all books (query params: genre, author, isRead)
+- GET /books/:id - Get single book by ID
+- POST /books - Create book {title, author, genre, publishedYear, isRead}
+- PUT /books/:id - Update existing book
+- DELETE /books/:id - Delete book
+- GET /stats - Return stats: total, byGenre, readCount
 
-Use in-memory storage (no database). Include proper error handling and validation. Add JSDoc comments for all endpoints.
+Implementation rules:
+1. Use in-memory array (no database)
+2. Put ALL routes and handlers in a single app.js file
+3. Use inline arrow functions for route handlers (not separate function declarations)
+4. No JSDoc comments, no error handling middleware
+5. Return JSON responses directly with res.json()
+6. Include package.json with express dependency
+
+Output format: Just the code files, nothing else.
