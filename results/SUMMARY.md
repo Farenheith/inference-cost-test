@@ -17,12 +17,12 @@
 | Variant | EN Tokens | PT Tokens | Difference | Variance |
 |---------|-----------|-----------|------------|----------|
 | Unconstrained (p6) | ~2,700* | ~6,500* | **+137%** ❌ | High |
-| Constrained (p2) | 953 | 963 | **+1.05%** ✓ | Low |
-| Verbose (p7) | TBD | TBD | TBD | TBD |
+| Constrained (p2) | 875 | 850 | **-2.9%** ✓ | Low |
+| Verbose (p7) | 8,913 | 9,779 | **+9.72%** | Medium |
 
 *Problem 6 timed out during testing, values estimated from prior runs.
 
-**Key Insight:** Prompt constraints have a larger impact on variance than language itself. The unconstrained prompt allows the model to choose output style freely, and Portuguese models tend to be more verbose.
+**Key Insight:** Prompt constraints have a larger impact on variance than language itself. The unconstrained prompt allows the model to choose output style freely, and Portuguese models tend to be more verbose. Even when forcing verbose explanations (p7), the variance drops to ~10%.
 
 ### 3. Consistent Results Across Problems (Constrained)
 
@@ -32,11 +32,15 @@
 
 **Problem 2 - REST API (Constrained):**
 - EN: 875 tokens | PT: 850 tokens (-2.9%)
-- Nearly identical when forced to output code-only
+- Nearly identical when forced to output code-only, no explanations
 
 **Problem 3 - Data Visualization:**
 - EN: 9,185 tokens | PT: 8,765 tokens (-4.5%)
 - Portuguese sometimes more concise in technical contexts
+
+**Problem 7 - REST API (Verbose):**
+- EN: 8,913 tokens | PT: 9,779 tokens (+9.72%)
+- Even with verbose explanations required, variance is moderate (~10%)
 
 ### 4. Consolidated Statistics (Problems 1, 2, 3)
 
@@ -75,12 +79,13 @@
 ```
 problems/
   p1/  # Task Manager (open-ended)
-  p2/  # REST API (constrained)  
+  p2/  # REST API (constrained - code only)
   p3/  # Data Visualization (open-ended)
   p6/  # REST API (unconstrained - for comparison)
-  p7/  # REST API (verbose style)
+  p7/  # REST API (verbose style - educational)
 results/
-  batch-1-2-3.json      # Original 5-run test
-  final-batch.json      # Constrained test with seed=42
-  api-variance-analysis.json  # Pending
+  batch-1-2-3.json      # Original 5-run test  
+  final-batch.json      # Constrained test with seed=42 (p1,p2,p3)
+  problem7.json         # Verbose API prompt results
+  SUMMARY.md            # This file - comprehensive findings
 ```
