@@ -1,0 +1,51 @@
+{
+  "timestamp": "2026-08-29T11:27:23.525936",
+  "model": "kat-coder-v2.5-dev-apex",
+  "api_url": "http://localhost:1234/v1/chat/completions",
+  "temperature": 0.0,
+  "seed": 42,
+  "problems": [
+    "7"
+  ],
+  "num_runs_per_problem": 1,
+  "summary_statistics": {
+    "english_tokens_mean": 8913.0,
+    "portuguese_tokens_mean": 9779.0,
+    "token_percentage_diff": 9.716144956804667,
+    "char_percentage_diff": 4.121016301953297,
+    "time_percentage_diff": 8.845887009550097,
+    "cost_ratio": 1.0971614495680466
+  },
+  "consolidated_stats": {
+    "english_tokens": {
+      "min": 8913,
+      "max": 8913,
+      "avg": 8913.0,
+      "p95": 8913
+    },
+    "portuguese_tokens": {
+      "min": 9779,
+      "max": 9779,
+      "avg": 9779.0,
+      "p95": 9779
+    }
+  },
+  "all_runs": [
+    {
+      "problem": "7",
+      "run": 1,
+      "language": "English",
+      "completion_tokens": 8913,
+      "char_count": 34045,
+      "elapsed": 175.95
+    },
+    {
+      "problem": "7",
+      "run": 1,
+      "language": "Portuguese",
+      "completion_tokens": 9779,
+      "char_count": 35448,
+      "elapsed": 191.51
+    }
+  ]
+}
