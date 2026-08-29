@@ -22,6 +22,7 @@ DEFAULT_API_URL = "http://localhost:1234/v1/chat/completions"
 DEFAULT_API_KEY = ""  # Empty for local LM Studio (no auth)
 DEFAULT_MODEL = "kat-coder-v2.5-dev-apex"
 DEFAULT_NUM_RUNS = 50
+DEFAULT_TEMPERATURE = 0.0
 
 
 # ========== PROMPTS - Equivalent JavaScript Task ==========
@@ -149,7 +150,8 @@ def run_inference(
     model: str, 
     api_key: str = "",
     session_name: str = "Test", 
-    run_num: int = 1
+    run_num: int = 1,
+    temperature: float = 0.0
 ) -> RunResult:
     """Run a single inference request and return metrics."""
     headers = {'Content-Type': 'application/json'}
@@ -162,7 +164,7 @@ def run_inference(
             {"role": "system", "content": "You are a helpful assistant that writes clean, well-structured code."},
             {"role": "user", "content": prompt}
         ],
-        "temperature": 0.7
+        "temperature": temperature
     }
     
     data = json.dumps(payload).encode('utf-8')
@@ -248,6 +250,8 @@ def main():
                         help=f'Model name (default: {DEFAULT_MODEL})')
     parser.add_argument('--runs', type=int, default=DEFAULT_NUM_RUNS,
                         help=f'Number of test rounds (default: {DEFAULT_NUM_RUNS})')
+    parser.add_argument('--temperature', type=float, default=DEFAULT_TEMPERATURE,
+                        help=f'Temperature for inference (default: {DEFAULT_TEMPERATURE}, deterministic)')
     parser.add_argument('--output', default='/home/tosol/inference_cost_results.json',
                         help='Output JSON file path')
     
@@ -257,6 +261,7 @@ def main():
     print(f"   Model: {args.model}")
     print(f"   API: {args.api_url}")
     print(f"   Runs: {args.runs}")
+    print(f"   Temperature: {args.temperature}")
     print(f"   API Key: {'***' if args.api_key else '(none - local)'}")
     
     all_results = []
@@ -275,7 +280,7 @@ def main():
         
         # English inference
         en_result = run_inference(PROMPT_ENGLISH, args.api_url, args.model, 
-                                  args.api_key, "English", run)
+                                  args.api_key, "English", run, args.temperature)
         all_results.append(en_result)
         en_tokens_list.append(en_result.completion_tokens)
         en_chars_list.append(en_result.char_count)
@@ -289,7 +294,7 @@ def main():
         
         # Portuguese inference
         pt_result = run_inference(PROMPT_PORTUGUESE, args.api_url, args.model,
-                                  args.api_key, "Portuguese", run)
+                                  args.api_key, "Portuguese", run, args.temperature)
         all_results.append(pt_result)
         pt_tokens_list.append(pt_result.completion_tokens)
         pt_chars_list.append(pt_result.char_count)
