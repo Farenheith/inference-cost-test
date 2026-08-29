@@ -1,0 +1,12 @@
+# Problema 3: Dashboard de Visualização de Dados
+
+Crie um dashboard interativo de visualização de dados usando HTML, CSS e JavaScript puro com Canvas API. O dashboard deve:
+
+1. Exibir um gráfico de barras mostrando dados de vendas mensais (simule 12 meses de dados)
+2. Incluir um gráfico de pizza mostrando distribuição de participação de mercado em 5 categorias
+3. Adicionar um gráfico de linhas mostrando tendências de temperatura ao longo do ano
+4. Cada gráfico deve ser interativo (tooltips de hover com valores)
+5. Inclua um painel de estatísticas resumo mostrando: total, média, mínimo, máximo para cada conjunto de dados
+6. Faça-o responsivo e visualmente atraente
+
+NÃO use bibliotecas externas - implemente os gráficos do zero usando Canvas API.

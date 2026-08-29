@@ -1,0 +1,15 @@
+# Problem 5: State Management System
+
+Create a lightweight state management library in JavaScript with the following features:
+
+1. createStore() function that creates a reactive store with:
+   - getState(): Returns current state
+   - setState(updater): Updates state (accepts object or function)
+   - subscribe(listener): Subscribe to state changes, returns unsubscribe function
+   - middleware support (apply middlewares before dispatching)
+2. Implement devtools integration (log all actions and state changes)
+3. Add persistence middleware option (save/load from localStorage)
+4. Create a simple counter app using this library as demo
+5. Include comprehensive JSDoc documentation for all public APIs
+
+The library should be tree-shakeable and work in both browser and Node.js environments.

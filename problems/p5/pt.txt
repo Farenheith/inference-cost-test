@@ -1,0 +1,15 @@
+# Problema 5: Sistema de Gerenciamento de Estado
+
+Crie uma biblioteca leve de gerenciamento de estado em JavaScript com os seguintes recursos:
+
+1. Função createStore() que cria uma loja reativa com:
+   - getState(): Retorna o estado atual
+   - setState(updater): Atualiza o estado (aceita objeto ou função)
+   - subscribe(listener): Inscreva-se para mudanças de estado, retorna função de cancelamento
+   - Suporte a middlewares (aplica middlewares antes de despachar)
+2. Implemente integração com devtools (registre todas as ações e mudanças de estado)
+3. Adicione opção de middleware de persistência (salvar/carregar do localStorage)
+4. Crie um app simples de contador usando esta biblioteca como demonstração
+5. Inclua documentação JSDoc abrangente para todas as APIs públicas
+
+A biblioteca deve ser tree-shakeable e funcionar tanto no navegador quanto no Node.js.

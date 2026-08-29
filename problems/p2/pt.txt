@@ -1,0 +1,12 @@
+# Problema 2: API REST com Express
+
+Crie uma API REST simples usando Node.js e Express.js que gerencia uma coleção de livros. A API deve suportar:
+
+1. GET /books - Listar todos os livros (com parâmetros de consulta opcionais para filtrar por gênero, autor ou status)
+2. GET /books/:id - Obter um único livro por ID
+3. POST /books - Criar um novo livro (título, autor, gênero, anoPublicacao, lido)
+4. PUT /books/:id - Atualizar um livro existente
+5. DELETE /books/:id - Excluir um livro
+6. GET /stats - Retornar estatísticas: total de livros, livros por gênero, livros lidos vs não lidos
+
+Use armazenamento em memória (sem banco de dados). Inclua tratamento adequado de erros e validação. Adicione comentários JSDoc para todos os endpoints.

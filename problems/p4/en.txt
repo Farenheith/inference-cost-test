@@ -1,0 +1,15 @@
+# Problem 4: Algorithm Implementation - Sorting Visualizer
+
+Create a web-based sorting algorithm visualizer using HTML, CSS, and JavaScript. The application should:
+
+1. Generate an array of random numbers (configurable size: 20-100 elements)
+2. Implement at least 3 sorting algorithms: Bubble Sort, Selection Sort, Quick Sort
+3. Visualize each step of the sorting process with color coding:
+   - Red: Current element being compared
+   - Green: Sorted portion
+   - Blue: Elements being swapped
+4. Add controls: Start, Pause, Reset, Speed slider
+5. Display algorithm complexity (time/space) in a info panel
+6. Show current step count and elapsed time
+
+Use requestAnimationFrame for smooth animations. No external libraries allowed.

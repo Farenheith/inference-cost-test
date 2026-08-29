@@ -1,0 +1,15 @@
+# Problema 4: Implementação de Algoritmo - Visualizador de Ordenação
+
+Crie um visualizador web de algoritmos de ordenação usando HTML, CSS e JavaScript. O aplicativo deve:
+
+1. Gerar um array de números aleatórios (tamanho configurável: 20-100 elementos)
+2. Implementar pelo menos 3 algoritmos de ordenação: Bubble Sort, Selection Sort, Quick Sort
+3. Visualizar cada etapa do processo de ordenação com codificação de cores:
+   - Vermelho: Elemento atual sendo comparado
+   - Verde: Parte ordenada
+   - Azul: Elementos sendo trocados
+4. Adicionar controles: Iniciar, Pausar, Reiniciar, Controle deslizante de velocidade
+5. Exibir complexidade do algoritmo (tempo/espaço) em um painel de informações
+6. Mostrar contagem de etapas atual e tempo decorrido
+
+Use requestAnimationFrame para animações suaves. Nenhuma biblioteca externa permitida.

@@ -1,0 +1,19 @@
+# Problema 1: Aplicativo de Gerenciamento de Tarefas
+
+Crie um aplicativo simples de gerenciamento de tarefas em JavaScript com os seguintes requisitos:
+
+1. O aplicativo deve permitir que os usuários adicionem novas tarefas com título e descrição
+2. Cada tarefa deve ter um status: pendente, em_andamento ou concluído
+3. Os usuários podem alternar a conclusão da tarefa clicando nela
+4. Exiba as tarefas agrupadas por seu status (Seções Pendentes, Em Andamento, Concluídos)
+5. Inclua um filtro para mostrar apenas tarefas pendentes, em andamento ou concluídas
+6. Adicione a capacidade de excluir tarefas
+7. Use localStorage para persistir as tarefas entre sessões
+8. A interface deve ser limpa e responsiva usando JavaScript puro (sem frameworks)
+
+Forneça:
+- index.html com a estrutura HTML
+- styles.css para estilização
+- app.js com toda a lógica
+- Comentários claros explicando cada seção importante
+- Um README.md com instruções de configuração

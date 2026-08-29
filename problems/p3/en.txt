@@ -1,0 +1,12 @@
+# Problem 3: Data Visualization Dashboard
+
+Create an interactive data visualization dashboard using HTML, CSS, and vanilla JavaScript with Canvas API. The dashboard should:
+
+1. Display a bar chart showing monthly sales data (simulate 12 months of data)
+2. Include a pie chart showing market share distribution across 5 categories
+3. Add a line chart showing temperature trends over a year
+4. Each chart should be interactive (hover tooltips with values)
+5. Include a summary statistics panel showing: total, average, min, max for each dataset
+6. Make it responsive and visually appealing
+
+Do NOT use any external libraries - implement charts from scratch using Canvas API.

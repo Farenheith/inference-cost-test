@@ -1,0 +1,19 @@
+# Problem 1: Task Management Application
+
+Create a simple task management application in JavaScript with the following requirements:
+
+1. The app should allow users to add new tasks with a title and description
+2. Each task should have a status: pending, in_progress, or completed
+3. Users can toggle task completion by clicking on it
+4. Display tasks grouped by their status (Pending, In Progress, Completed sections)
+5. Include a filter to show only pending tasks, in-progress tasks, or completed tasks
+6. Add the ability to delete tasks
+7. Use localStorage to persist tasks between sessions
+8. The UI should be clean and responsive using vanilla JavaScript (no frameworks)
+
+Provide:
+- index.html with the HTML structure
+- styles.css for styling
+- app.js with all the logic
+- Clear comments explaining each major section
+- A README.md with setup instructions
