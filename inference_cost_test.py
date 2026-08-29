@@ -72,7 +72,7 @@ class RunResult:
     total_tokens: int
     char_count: int
     elapsed: float
-    response_preview: str = ""
+    response: str = ""  # Full response text for validation
 
 
 # ========== STATISTICS FUNCTIONS ==========
@@ -193,7 +193,7 @@ def run_inference(
                 total_tokens=total_tokens,
                 char_count=len(response_text),
                 elapsed=elapsed,
-                response_preview=response_text[:200]
+                response=response_text
             )
     except Exception as e:
         print(f"  ❌ Error in {session_name} run {run_num}: {e}")
@@ -431,7 +431,8 @@ def main():
                 'language': r.language,
                 'completion_tokens': r.completion_tokens,
                 'char_count': r.char_count,
-                'elapsed': round(r.elapsed, 2)
+                'elapsed': round(r.elapsed, 2),
+                'response': r.response
             }
             for r in all_results
         ]
