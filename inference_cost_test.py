@@ -415,6 +415,7 @@ def main():
                 'completion_tokens': r.completion_tokens,
                 'char_count': r.char_count,
                 'elapsed': round(r.elapsed, 2),
+                'response': r.response  # Full response for quality analysis
             }
             for r in all_results
         ]
