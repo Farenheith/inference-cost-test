@@ -93,14 +93,7 @@ Both implementations are production-ready with:
 - Comparable documentation depth
 - Proper REST conventions
 
-**Portuguese has a slight edge in:**
-- Better file structure (src/ organization)
-- Model pattern implementation
-- Project tree visualization
-
-**English has a slight edge in:**
-- More verbose explanations
-- Slightly more detailed "why" reasoning
+---
 
 ### Documentation Quality: **TIE** ⚖️
 
@@ -109,11 +102,6 @@ Both use identical structure:
 2. File-by-file breakdown
 3. Code + explanation interleaved
 4. Testing instructions
-
-**Key Observation:** The Portuguese response is actually MORE CONCISE while delivering equal technical depth. This suggests:
-- Portuguese tokenization is more efficient for technical content
-- Portuguese models may be better optimized for coding tasks
-- The -21.82% difference isn't just "less content" — it's denser, more efficient communication
 
 ### Functional Equivalence: **VERIFIED** ✅
 
@@ -129,16 +117,26 @@ Both implementations support:
 
 ## Key Takeaways
 
-1. **Non-determinism is real**: Same seed ≠ same results on GPU inference
-2. **Portuguese can be MORE efficient**: -21% tokens with equal/better code quality
-3. **Code quality is language-independent**: Both responses are production-ready
-4. **Documentation style varies**: Portuguese tends to be more concise, English more verbose
+**⚠️ IMPORTANT: Insufficient Data for Conclusions**
 
----
+With only 2 runs and ~31% variance between them (even with identical seed), **no statistically valid conclusion can be drawn** about language efficiency differences.
 
-## Recommendation
+### What We Know:
+- Non-determinism exists even with seed=42 and temperature=0
+- Both implementations are functionally equivalent and production-ready
+- Code quality is comparable across languages
+- Single data points (8,913 vs 9,779 in run 1; 10,671 vs 8,343 in run 2) are meaningless due to variance
 
-For cost-sensitive deployments:
-- Use seed parameter for reproducibility (but expect some variance)
-- Consider Portuguese as a valid alternative — it may actually be MORE efficient
-- Don't assume "more tokens = better quality" — the Portuguese response was denser and equally complete
+### What We DON'T Know:
+- Whether Portuguese is more/less efficient than English
+- True mean token difference (requires n≥30 runs)
+- Whether observed differences are real or statistical noise
+
+### Next Steps Required:
+To draw valid conclusions, we need:
+1. **Minimum 30 runs** per language to establish statistical significance
+2. **Same seed across all runs** for reproducibility  
+3. **Report mean ± std dev**, not single data points
+4. **Paired t-tests** to validate differences
+
+**Until then: The question "Is Portuguese more efficient than English?" remains UNANSWERED.**
