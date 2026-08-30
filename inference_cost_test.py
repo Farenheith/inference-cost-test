@@ -289,12 +289,6 @@ def main():
         print(f"  PROBLEM: {prob_id}")
         print(f"{'='*70}")
         
-        # Unload model before starting new problem batch (to clear GPU state)
-        if not args.no_unload and DEFAULT_UNLOAD_MODEL:
-            print(f"\n  🔄 Unloading model to clear GPU state...")
-            unload_model(args.api_url.replace('/v1/chat/completions', ''), args.model)
-            time.sleep(2)  # Brief pause to ensure unload completes
-        
         try:
             # Load prompts
             prompt_en = load_prompt(prob_id, "en")
@@ -302,6 +296,12 @@ def main():
             
             for run in range(1, args.runs + 1):
                 print(f"\n--- Run {run}/{args.runs} ---")
+                
+                # Unload model before each run to clear GPU state
+                if not args.no_unload and DEFAULT_UNLOAD_MODEL:
+                    print(f"  🔄 Unloading model to clear GPU state...")
+                    unload_model(args.api_url.replace('/v1/chat/completions', ''), args.model)
+                    time.sleep(2)  # Brief pause to ensure unload completes
                 
                 # English inference
                 en_result = run_inference(prompt_en, args.api_url, args.model, 
