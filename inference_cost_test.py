@@ -297,11 +297,11 @@ def main():
             for run in range(1, args.runs + 1):
                 print(f"\n--- Run {run}/{args.runs} ---")
                 
-                # Unload model before each run to clear GPU state
+                # Unload model before English inference to clear GPU state
                 if not args.no_unload and DEFAULT_UNLOAD_MODEL:
-                    print(f"  🔄 Unloading model to clear GPU state...")
+                    print(f"  🔄 Unloading model before English...")
                     unload_model(args.api_url.replace('/v1/chat/completions', ''), args.model)
-                    time.sleep(2)  # Brief pause to ensure unload completes
+                    time.sleep(2)
                 
                 # English inference
                 en_result = run_inference(prompt_en, args.api_url, args.model, 
@@ -315,8 +315,11 @@ def main():
                 print(f"  ✅ English: {en_result.completion_tokens:,} tokens, "
                       f"{en_result.char_count:,} chars, {en_result.elapsed:.1f}s")
                 
-                # Brief pause
-                time.sleep(1)
+                # Unload model before Portuguese inference to clear GPU state
+                if not args.no_unload and DEFAULT_UNLOAD_MODEL:
+                    print(f"  🔄 Unloading model before Portuguese...")
+                    unload_model(args.api_url.replace('/v1/chat/completions', ''), args.model)
+                    time.sleep(2)
                 
                 # Portuguese inference
                 pt_result = run_inference(prompt_pt, args.api_url, args.model,
