@@ -20,12 +20,14 @@ from pathlib import Path
 
 # ========== DEFAULT CONFIG ==========
 DEFAULT_API_URL = "http://localhost:1234/v1/chat/completions"
+DEFAULT_API_BASE = "http://localhost:1234"  # Base URL for model management
 DEFAULT_API_KEY = ""  # Empty for local LM Studio (no auth)
 DEFAULT_MODEL = "kat-coder-v2.5-dev-apex"
 DEFAULT_NUM_RUNS = 1  # One round per problem
 DEFAULT_TEMPERATURE = 0.0
 DEFAULT_SEED = None  # None = random seed each run
 DEFAULT_PROBLEMS = "1"  # Default to problem 1
+DEFAULT_UNLOAD_MODEL = True  # Unload model before each test batch
 PROBLEMS_DIR = Path(__file__).parent / "problems"
 
 
@@ -67,6 +69,55 @@ def percentile(values: List[float], p: int) -> float:
 
 def p95(values: List[float]) -> float:
     return percentile(values, 95)
+
+
+# ========== MODEL MANAGEMENT ==========
+
+def unload_model(api_base: str, model: str) -> bool:
+    """Unload (eject) a model from LM Studio memory via REST API."""
+    url = f"{api_base}/api/v1/models/unload"
+    payload = json.dumps({"instance_id": model}).encode('utf-8')
+    
+    try:
+        req = urllib.request.Request(
+            url,
+            data=payload,
+            headers={'Content-Type': 'application/json'},
+            method='POST'
+        )
+        with urllib.request.urlopen(req, timeout=10) as response:
+            result = json.loads(response.read().decode('utf-8'))
+            if result.get('instance_id') == model:
+                print(f"  ✅ Model {model} unloaded from memory")
+                return True
+            else:
+                print(f"  ⚠️  Model unload returned unexpected response: {result}")
+                return False
+    except Exception as e:
+        print(f"  ⚠️  Failed to unload model: {e}")
+        return False
+
+
+def wait_for_model_load(api_base: str, model: str, timeout: int = 60) -> bool:
+    """Wait for model to be loaded in LM Studio after unload."""
+    url = f"{api_base}/api/v1/models"
+    start_time = time.time()
+    
+    while time.time() - start_time < timeout:
+        try:
+            req = urllib.request.Request(url, method='GET')
+            with urllib.request.urlopen(req, timeout=5) as response:
+                data = json.loads(response.read().decode('utf-8'))
+                for m in data.get('models', []):
+                    if m.get('key') == model and m.get('loaded_instances'):
+                        print(f"  ✅ Model {model} is loaded")
+                        return True
+        except:
+            pass
+        time.sleep(1)
+    
+    print(f"  ⚠️  Timeout waiting for model {model} to load")
+    return False
 
 
 # ========== PROMPT LOADING ==========
@@ -129,7 +180,7 @@ def run_inference(
     
     start_time = time.time()
     try:
-        with urllib.request.urlopen(req, timeout=300) as response:
+        with urllib.request.urlopen(req, timeout=300) as response:  # 5 minute timeout
             elapsed = time.time() - start_time
             result = json.loads(response.read().decode('utf-8'))
             
@@ -206,6 +257,8 @@ def main():
                         help=f'Comma-separated problem IDs (default: {DEFAULT_PROBLEMS}, e.g., "1,2,3")')
     parser.add_argument('--output', default='/home/tosol/inference_cost_results.json',
                         help='Output JSON file path')
+    parser.add_argument('--no-unload', action='store_true',
+                        help='Disable automatic model unload before each test batch')
     
     args = parser.parse_args()
     
@@ -220,6 +273,7 @@ def main():
     print(f"   Temperature: {args.temperature}")
     print(f"   Seed: {args.seed if args.seed else 'random (variance expected)'}")
     print(f"   API Key: {'***' if args.api_key else '(none - local)'}")
+    print(f"   Unload model: {not args.no_unload} (before each batch)")
     
     all_results = []
     en_tokens_list = []
@@ -234,6 +288,12 @@ def main():
         print(f"\n{'='*70}")
         print(f"  PROBLEM: {prob_id}")
         print(f"{'='*70}")
+        
+        # Unload model before starting new problem batch (to clear GPU state)
+        if not args.no_unload and DEFAULT_UNLOAD_MODEL:
+            print(f"\n  🔄 Unloading model to clear GPU state...")
+            unload_model(args.api_url.replace('/v1/chat/completions', ''), args.model)
+            time.sleep(2)  # Brief pause to ensure unload completes
         
         try:
             # Load prompts
