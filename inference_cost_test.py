@@ -41,6 +41,7 @@ class RunResult:
     char_count: int
     elapsed: float
     response: str = ""  # Full response text for validation
+    assistant_message: Optional[dict] = None  # For session continuity
 
 
 # ========== STATISTICS FUNCTIONS ==========
@@ -149,26 +150,33 @@ def run_inference(
     session_name: str = "Test", 
     run_num: int = 1,
     temperature: float = 0.0,
-    seed: Optional[int] = None
+    seed: Optional[int] = None,
+    conversation_history: List[dict] = None
 ) -> RunResult:
     """Run a single inference request and return metrics."""
     headers = {'Content-Type': 'application/json'}
     if api_key:
         headers['Authorization'] = f'Bearer {api_key}'
     
+    # Build messages list with conversation history
+    messages = [
+        {"role": "system", "content": "You are a helpful assistant that writes clean, well-structured code."}
+    ]
+    
+    # Add conversation history if provided (for session continuity)
+    if conversation_history:
+        messages.extend(conversation_history)
+    
+    # Add current prompt
+    messages.append({"role": "user", "content": prompt})
+    
     payload = {
         "model": model,
-        "messages": [
-            {"role": "system", "content": "You are a helpful assistant that writes clean, well-structured code."},
-            {"role": "user", "content": prompt}
-        ],
+        "messages": messages,
         "temperature": temperature,
-        "max_tokens": -1
+        "max_tokens": -1,
+        "session_id": f"{session_name.lower()}-{run_num}"  # Unique session per run
     }
-    
-    # Add seed for deterministic output if specified
-    if seed is not None:
-        payload["seed"] = seed
     
     data = json.dumps(payload).encode('utf-8')
     req = urllib.request.Request(
@@ -190,6 +198,9 @@ def run_inference(
             total_tokens = usage.get('total_tokens', 0)
             response_text = result['choices'][0]['message']['content']
             
+            # Extract assistant message for conversation history tracking
+            assistant_message = result['choices'][0]['message']
+            
             return RunResult(
                 problem_id=f"run_{run_num}",
                 language=session_name,
@@ -198,7 +209,8 @@ def run_inference(
                 total_tokens=total_tokens,
                 char_count=len(response_text),
                 elapsed=elapsed,
-                response=response_text
+                response=response_text,
+                assistant_message=assistant_message  # For session continuity
             )
     except Exception as e:
         print(f"  ❌ Error in {session_name} run {run_num}: {e}")
@@ -297,13 +309,7 @@ def main():
             for run in range(1, args.runs + 1):
                 print(f"\n--- Run {run}/{args.runs} ---")
                 
-                # Unload model before English inference to clear GPU state
-                if not args.no_unload and DEFAULT_UNLOAD_MODEL:
-                    print(f"  🔄 Unloading model before English...")
-                    unload_model(args.api_url.replace('/v1/chat/completions', ''), args.model)
-                    time.sleep(2)
-                
-                # English inference
+                # English inference (new session per run)
                 en_result = run_inference(prompt_en, args.api_url, args.model, 
                                           args.api_key, "English", run, args.temperature, args.seed)
                 en_result.problem_id = prob_id
@@ -315,13 +321,7 @@ def main():
                 print(f"  ✅ English: {en_result.completion_tokens:,} tokens, "
                       f"{en_result.char_count:,} chars, {en_result.elapsed:.1f}s")
                 
-                # Unload model before Portuguese inference to clear GPU state
-                if not args.no_unload and DEFAULT_UNLOAD_MODEL:
-                    print(f"  🔄 Unloading model before Portuguese...")
-                    unload_model(args.api_url.replace('/v1/chat/completions', ''), args.model)
-                    time.sleep(2)
-                
-                # Portuguese inference
+                # Portuguese inference (new session per run)
                 pt_result = run_inference(prompt_pt, args.api_url, args.model,
                                           args.api_key, "Portuguese", run, args.temperature, args.seed)
                 pt_result.problem_id = prob_id
