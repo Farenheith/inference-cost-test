@@ -44,6 +44,7 @@ python3 -u inference_cost_test.py --problems 7 --runs 2 --seed 42 --output resul
 ```
 
 ---
-**Test session ended:** 2026-08-30 ~14:30 BRT  
-**User:** Heading home, will continue later  
-**Issue found:** Model unload works but causes timeouts on first inference call (reload latency)
+**Test session ended:** 2026-08-30 ~15:45 BRT  
+**User:** Pausing task — deterministic mode not fully working, need more statistical sampling  
+**Status:** Inconclusive — GPU state accumulation caused massive variance (+60% drift), but recent tests show consistent -10% (PT cheaper) when using unload/session management  
+**Next session goal:** Run 50+ tests to determine true difference once deterministic mode is confirmed working
